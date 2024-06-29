@@ -4,6 +4,21 @@ const app = express() // Inicializamos la variable de la libreria
 const port = 3000 // Definimos el puerto a usar
 
 
+const mongoose = require('mongoose');
+mongoose.connect("mongodb+srv://angiecuesta:1996.Marzo@cluster0.rotwdup.mongodb.net/TalentoTech") // Creo la cadena de conexion
+
+// Obtengo la cadena de conexion del archivo .env
+require('dotenv').config()
+const DB_CONNECTION = process.env.DB_CONNECTION || ''
+mongoose.connect(DB_CONNECTION) // Creo la cadena de conexion
+
+
+// Importamos las rutas del otro archivo
+app.use(express.urlencoded({extended: true})) // Acceder a la informacion de las urls
+app.use(express.json()) // Analizar informacion en formato JSON
+const UserRoutes = require('./Routes/UserRoutes')
+app.use('/', UserRoutes)
+
 
 // Creando el servicio web
 // Funcionalidad de nuestra API
